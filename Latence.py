@@ -15,10 +15,10 @@ BLUE = "\033[94m"
 def IPLOOKUP():
     print(BLUE + "IP LOOK UP")
     ip_address = input("Veuillez entrer l'adresse IP cible : ")
-    
+
     url = f"https://ipinfo.io/{ip_address}/json"
     response = requests.get(url)
-    
+
     if response.status_code == 200:
         data = response.json()
 
@@ -51,7 +51,7 @@ def GEOIP_DETAILED():
 
     url = f"https://ipinfo.io/{ip_address}/json"
     response = requests.get(url)
-    
+
     if response.status_code == 200:
         data = response.json()
 
@@ -73,7 +73,7 @@ def VPN_TOR_LOOKUP():
 
     url = f"https://ipinfo.io/{ip_address}/vpn"
     response = requests.get(url)
-    
+
     if response.status_code == 200:
         vpn_tor = response.text.strip()
         if vpn_tor == "true":
@@ -118,23 +118,6 @@ def DNS_LEAK_CHECK():
     input("Appuyez sur Entrée pour continuer...")
     clear_screen()
 
-def LOCAL_NETWORK_INFO():
-    print(BLUE + "INFORMATIONS SUR LE RÉSEAU LOCAL")
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-    
-    print(f"Nom de l'hôte : {hostname}")
-    print(f"Adresse IP locale : {local_ip}")
-
-    try:
-        gateway = socket.gethostbyname(socket.getfqdn())
-        print(f"Passerelle par défaut : {gateway}")
-    except socket.gaierror:
-        print("Impossible de déterminer la passerelle par défaut.")
-
-    input("Appuyez sur Entrée pour continuer...")
-    clear_screen()
-    
 def generate_email_addresses(first_name, last_name):
     email_addresses = []
 
@@ -165,19 +148,25 @@ def generate_email_addresses(first_name, last_name):
     email_addresses.append(f"{last_name}.{first_name}@yahoo.com")
 
     return email_addresses
-    
+
 def main():
     while True:
         clear_screen()
         print(BLUE + r"""
         ❘-----------------------❘	
+        
           ╦  ┌─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐
           ║  ├─┤ │ ├┤ ││││  ├┤ 
-          ╩═╝┴ ┴ ┴ └─┘┘└┘└─┘└─┘
+          ╩═╝┴ ┴ ┴ └─┘┘└┘└─┘└─┘    
+              .------. 
+             |        |
+             |        |
+           .-|        |-.
+            \  '----'  /   
+             '--------'
         ❘-----------------------❘
         """)
-
-        choix = input("\n1- GEO IP\n2- PING IP\n3- IP LOOK UP\n4- RECHERCHE DE SERVICES VPN/TOR\n5- RECHERCHE DE PORTS OUVERTS\n6- LEAKS DNS\n7- INFO RÉSEAUX\n8- EMAIL FINDER(OSINT)\nChoisissez une option (ou tapez 'exit' pour quitter) : ")
+        choix = input("\n[1] GEO IP\n[2] PING IP\n[3] IP LOOK UP\n[4] RECHERCHE DE SERVICES VPN/TOR\n[5] RECHERCHE DE PORTS OUVERTS\n[6] LEAKS DNS\n[7] EMAIL FINDER(OSINT)\nChoisie une option : ")
 
         if choix == '1':
             GEOIP_DETAILED()
@@ -192,8 +181,6 @@ def main():
         elif choix == '6':
             DNS_LEAK_CHECK()
         elif choix == "7":
-            LOCAL_NETWORK_INFO()
-        elif choix == "8":
             first_name = input("Veuillez entrer le prénom : ")
             last_name = input("Veuillez entrer le nom : ")
             email_addresses = generate_email_addresses(first_name, last_name)
